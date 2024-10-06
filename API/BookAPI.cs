@@ -1,73 +1,70 @@
 using Microsoft.EntityFrameworkCore;
 using SimplyBooksAPI.Models;
 using System;
-
 namespace SimplyBooksAPI.API
 {
-    public class BookAPI
+    public class AuthorAPI
     {
         public static void Map(WebApplication app)
         {
-            // Get all Books 
-            app.MapGet("/Books", (SimplyBooksAPIDbContext db) =>
+            // Get all authors
+            app.MapGet("/authors", (SimplyBooksAPIDbContext db) =>
             {
-                return db.Books.ToList();
+                return db.Authors.Include(p => p.Books).ToList();
             });
 
-            // Get Single Book (details)
-            app.MapGet("/books/{id}", (SimplyBooksAPIDbContext db, int id) =>
+            // Get author by ID
+            app.MapGet("/authors/{id}", (SimplyBooksAPIDbContext db, int id) =>
             {
-                Book book = db.Books
-                .Include(book => book.Author)
-                .SingleOrDefault(book => book.Id == id);
-
-                if (book == null)
+                var author = db.Authors
+                                .Include(a => a.Books)
+                                .FirstOrDefault(a => a.Id == id);
+                if (author == null)
                 {
                     return Results.NotFound();
                 }
-                return Results.Ok(book);
-
+                return Results.Ok(author);
             });
 
-            // Create Book 
-            app.MapPost("/books", (SimplyBooksAPIDbContext db, Book newBook) =>
+            // Create new author
+            app.MapPost("/authors", (SimplyBooksAPIDbContext db, Author newAuthor) =>
             {
-                db.Books.Add(newBook);
+                db.Authors.Add(newAuthor);
                 db.SaveChanges();
-                return Results.Created($"books/{newBook.Id}", newBook);
+                return Results.Created($"authors/{newAuthor.Id}", newAuthor);
             });
 
-            // Update Book
-            app.MapPut("/books/{id}", (SimplyBooksAPIDbContext db, int id, Book book) =>
+            // Update single author
+            app.MapPut("/authors/{id}", (SimplyBooksAPIDbContext db, int id, Author author) =>
             {
-                Book bookToUpdate = db.Books.SingleOrDefault(book => book.Id == id);
-                if (bookToUpdate == null)
+                Author authorToUpdate = db.Authors.SingleOrDefault(author => author.Id == id);
+
+                if (authorToUpdate == null)
                 {
                     return Results.NotFound();
                 }
 
-                bookToUpdate.Title = book.Title;
-                bookToUpdate.Image = book.Image;
-                bookToUpdate.Description = book.Description;
-                bookToUpdate.Price = book.Price;
-                bookToUpdate.Sale = book.Sale;
+                authorToUpdate.FirstName = author.FirstName;
+                authorToUpdate.LastName = author.LastName;
+                authorToUpdate.Email = author.Email;
+                authorToUpdate.Image = author.Image;
+                authorToUpdate.Favorite = author.Favorite;
 
                 db.SaveChanges();
-                return Results.Ok(bookToUpdate);
-
+                return Results.Ok(authorToUpdate);
             });
 
-            // Delete Book
-            app.MapDelete("/books/{id}", (SimplyBooksAPIDbContext db, int id) =>
+            // Delete author
+            app.MapDelete("/authors/{id}", (SimplyBooksAPIDbContext db, int id) =>
             {
-                Book book = db.Books.SingleOrDefault(book => book.Id == id);
+                Author author = db.Authors.SingleOrDefault(author => author.Id == id);
 
-                if (book == null)
+                if (author == null)
                 {
                     return Results.NotFound();
                 }
 
-                db.Books.Remove(book);
+                db.Authors.Remove(author);
                 db.SaveChanges();
                 return Results.NoContent();
             });
