@@ -16,10 +16,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+<<<<<<< Updated upstream
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
+=======
+AuthorAPI.Map(app);
+BookAPI.Map(app);
+>>>>>>> Stashed changes
 
 app.MapGet("/weatherforecast", () =>
 {
