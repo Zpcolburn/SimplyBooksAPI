@@ -34,6 +34,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 AuthorAPI.Map(app);
-//BookAPI.Map(app);
+BookAPI.Map(app);
 
 app.Run();
