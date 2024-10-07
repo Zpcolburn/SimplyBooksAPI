@@ -1,61 +1,62 @@
-<h1 align="center" style="font-weight: bold;">Project name 💻</h1>
+<h1 align="center" style="font-weight: bold;">Simply Books API</h1>
 
 <p align="center">
  <a href="#tech">Technologies</a> • 
  <a href="#started">Getting Started</a> • 
-  <a href="#routes">API Endpoints</a> •
- <a href="#colab">Collaborators</a> •
- <a href="#contribute">Contribute</a>
+  <a href="#routes">API Endpoints</a> 
 </p>
 
 <p align="center">
-    <b>Simple description of what your project do or how to use it.</b>
+    <b>The SimplyBooks API is a RESTful service that powers a fictional online bookstore, enabling users to browse, and manage. This API provides full CRUD (Create, Read, Update, Delete) functionality for books and authors, allowing complete control over the bookstore's catalog and author profiles.
+
+Key functionalities supported by the API include:
+
+Full CRUD operations on books and authors
+This documentation outlines the API endpoints, request and response formats, and usage examples. It adheres to REST principles and returns data in JSON format. You can interact with the API using the provided Postman collection to explore the endpoints in depth.</b>
 </p>
 
 <h2 id="technologies">💻 Technologies</h2>
 
 - list of all technologies you used
-- Java
-- MongoDB
-- NodeJS
+- C#
+- .NET
+- Postman
+- SQL
 
 <h2 id="started">🚀 Getting started</h2>
 
-Here you describe how to run your project locally
-
 <h3>Prerequisites</h3>
 
-Here you list all prerequisites necessary for running your project. For example:
+Here you list all the prerequisites necessary for running your project. For example:
 
-- [NodeJS](https://github.com/)
-- [Git 2](https://github.com)
+- [Visual Studio](https://visualstudio.microsoft.com/downloads/)
+- [.NET](https://learn.microsoft.com/en-us/dotnet/framework/install/on-windows-11)
+- [pgAdmin](https://www.pgadmin.org/download/)
 
-<h3>Cloning</h3>
+<h3>Cloning the Repository</h3>
 
-How to clone your project
+Clone this repo by copying and pasting this command into your terminal 
+git clone git@github.com:Zpcolburn/SimplyBooksAPI.git
 
-```bash
-git clone your-project-url-in-github
-```
+<h3>Install Required Packages</h3>
+Once the repository is cloned, go to the project directory in your terminal and run the following commands to install necessary packages:
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 6.0
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 6.0
 
-<h3>Config .env variables</h2>
+<h3>Set up Secrets for PostgreSQL</h2>
+To initialize the secrets use the following command:
+dotnet user-secrets init
 
-Use the `.env.example` as reference to create your configuration file `.env` with your AWS Credentials
+Then set the connection string, make sure to replace the password section with your password for PostgreSQL:
+dotnet user-secrets set "SimplyBooksAPIDbConnectionString" "Host=localhost;Port=5432;Username=postgres;Password=<your_postgresql_password>;Database=SimplyBooksAPI"
 
-```yaml
-NODE_AWS_REGION=us-east-1
-NODE_AWS_KEY_ID={YOUR_AWS_KEY_ID}
-NODE_AWS_SECRET={YOUR_AWS_SECRET}
-```
+<h3>Migrations</h3>
+Run this comand to apply migrations:
+dotnet ef database update
 
 <h3>Starting</h3>
-
-How to start your project
-
-```bash
-cd project-name
-npm some-command-to-run
-```
+At the top of visual studio you will see a green play button, make sure it says HTTPS if not change it in the drop down. 
+If it says HTTPS click the green play button, Swagger will load automatically and you can see all the API calls 
 
 <h2 id="routes">📍 API Endpoints</h2>
 
@@ -63,81 +64,18 @@ Here you can list the main routes of your API, and what are their expected reque
 ​
 | route               | description                                          
 |----------------------|-----------------------------------------------------
-| <kbd>GET /authenticate</kbd>     | retrieves user info see [response details](#get-auth-detail)
-| <kbd>POST /authenticate</kbd>     | authenticate user into the api see [request details](#post-auth-detail)
+| <kbd>GET /authors</kbd>     | retrieves all Authors 
+| <kbd>GET /authors/{id}</kbd>     | retrieves a single Author info
+| <kbd>POST /authors</kbd>     | creates a new Author
+| <kbd>PUT /authors/{id}</kbd>     | edit a single Author
+| <kbd>DELETE authors{id}</kbd>     | deletes a single Author 
+| <kbd>GET /books</kbd>     | retrieves all Books
+| <kbd>GET /books/{id}</kbd>     | retrieves single Book info 
+| <kbd>POST /books</kbd>     | creates a new Book
+| <kbd>PUT /books/{id}</kbd>     | edit a single Book 
+| <kbd>DELETE /books/{id}</kbd>     | Deletes a single Book 
 
-<h3 id="get-auth-detail">GET /authenticate</h3>
-
-**RESPONSE**
-```json
-{
-  "name": "Fernanda Kipper",
-  "age": 20,
-  "email": "her-email@gmail.com"
-}
-```
-
-<h3 id="post-auth-detail">POST /authenticate</h3>
-
-**REQUEST**
-```json
-{
-  "username": "fernandakipper",
-  "password": "4444444"
-}
-```
-
-**RESPONSE**
-```json
-{
-  "token": "OwoMRHsaQwyAgVoc3OXmL1JhMVUYXGGBbCTK0GBgiYitwQwjf0gVoBmkbuyy0pSi"
-}
-```
-
-<h2 id="colab">🤝 Collaborators</h2>
-
-Special thank you for all people that contributed for this project.
-
-<table>
-  <tr>
-    <td align="center">
-      <a href="#">
-        <img src="https://avatars.githubusercontent.com/u/61896274?v=4" width="100px;" alt="Fernanda Kipper Profile Picture"/><br>
-        <sub>
-          <b>Fernanda Kipper</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="#">
-        <img src="https://t.ctcdn.com.br/n7eZ74KAcU3iYwnQ89-ul9txVxc=/400x400/smart/filters:format(webp)/i490769.jpeg" width="100px;" alt="Elon Musk Picture"/><br>
-        <sub>
-          <b>Elon Musk</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="#">
-        <img src="https://miro.medium.com/max/360/0*1SkS3mSorArvY9kS.jpg" width="100px;" alt="Foto do Steve Jobs"/><br>
-        <sub>
-          <b>Steve Jobs</b>
-        </sub>
-      </a>
-    </td>
-  </tr>
-</table>
-
-<h2 id="contribute">📫 Contribute</h2>
-
-Here you will explain how other developers can contribute to your project. For example, explaining how can create their branches, which patterns to follow and how to open an pull request
-
-1. `git clone https://github.com/Fernanda-Kipper/text-editor.git`
-2. `git checkout -b feature/NAME`
-3. Follow commit patterns
-4. Open a Pull Request explaining the problem solved or feature made, if exists, append screenshot of visual modifications and wait for the review!
 
 <h3>Documentations that might help</h3>
 
-[📝 How to create a Pull Request](https://www.atlassian.com/br/git/tutorials/making-a-pull-request)
-
-[💾 Commit pattern](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
+[Postman Documentation](https://documenter.getpostman.com/view/31920812/2sAXxP9CfF)
