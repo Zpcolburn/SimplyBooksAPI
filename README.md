@@ -79,3 +79,4 @@ Here you can list the main routes of your API, and what are their expected reque
 <h3>Documentations that might help</h3>
 
 [Postman Documentation](https://documenter.getpostman.com/view/31920812/2sAXxP9CfF)
+[Loom video](https://www.loom.com/share/fd15a16670974b229b4ae5f919aff327?sid=109e76f5-1271-4b39-9ff1-3c237b5c4114)
